@@ -45,7 +45,6 @@ export const setExpenses = (expenses) => ({
   expenses
 });
 
-//export const startSetExpenses;
 export const startSetExpenses = () => {
   return dispatch => {
     return database.ref('expenses').once('value').then((snapshot) => {
@@ -61,4 +60,12 @@ export const startSetExpenses = () => {
       dispatch(setExpenses(expenses));
     });
   }
+};
+
+export const startRemoveExpense = ({id} = {}) => {
+  return (dispatch) => {
+    return database.ref(`expenses/${id}`).remove().then(() => {
+      dispatch(removeExpense({id}));
+    });
+  };
 };
